@@ -231,16 +231,14 @@ class SimbleBan:
         try :
             x = json_object["features"][0]["geometry"]["coordinates"][0]
             y = json_object["features"][0]["geometry"]["coordinates"][1]
-
             projetCrs = QgsProject.instance().crs()
             ptsCrs = QgsCoordinateReferenceSystem(4326)
             transform = QgsCoordinateTransform(ptsCrs, projetCrs, QgsProject.instance())
             coord = transform.transform(QgsPointXY(x, y))
             self.iface.mapCanvas().setCenter(coord)
-            self.iface.mapCanvas().zoomScale(500)
+            self.iface.mapCanvas().zoomScale(1000)
         except Exception :
             pass
-        pass
 
         
         
