@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/simple_ban" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>
