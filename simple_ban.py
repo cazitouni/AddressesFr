@@ -21,7 +21,6 @@
  *                                                                         *
  ***************************************************************************/
 """
-from msilib.schema import Error
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction, QErrorMessage, QCompleter
