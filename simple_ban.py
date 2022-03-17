@@ -216,8 +216,7 @@ class SimbleBan:
             json_object = json.loads(r.content)
             try :
                 for feature in json_object["features"] :
-                    listeAddr.append(str(feature["properties"]["label"]))
-                    
+                    listeAddr.append(str(feature["properties"]["label"]))    
             except KeyError:
                 pass     
         self.model.setStringList(listeAddr)
@@ -226,8 +225,9 @@ class SimbleBan:
     def recherche(self): 
         url = "https://adict.strasbourg.eu/addok/search?q={}&limit=1".format(self.dlg.barre.text())
         r = requests.get(url)
-        json_object = json.loads(r.content)
+        
         try :
+            json_object = json.loads(r.content)
             x = json_object["features"][0]["geometry"]["coordinates"][0]
             y = json_object["features"][0]["geometry"]["coordinates"][1]
             projetCrs = QgsProject.instance().crs()
