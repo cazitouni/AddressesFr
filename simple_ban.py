@@ -213,8 +213,8 @@ class SimbleBan:
         if self.dlg.barre.text() : 
             url = "https://adict.strasbourg.eu/addok/search?q={}".format(self.dlg.barre.text())
             r = requests.get(url)
-            json_object = json.loads(r.content)
             try :
+                json_object = json.loads(r.content)
                 for feature in json_object["features"] :
                     listeAddr.append(str(feature["properties"]["label"]))    
             except KeyError:
