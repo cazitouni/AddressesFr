@@ -211,7 +211,7 @@ class SimbleBan:
     def completion(self) :
         listeAddr = []
         if self.dlg.barre.text() : 
-            url = "https://ban.metrotopic.net/{}".format(self.dlg.barre.text())
+            url = "https://adict.strasbourg.eu/addok/search?q={}".format(self.dlg.barre.text())
             r = requests.get(url)
             json_object = json.loads(r.content)
             try :
@@ -224,7 +224,7 @@ class SimbleBan:
 
     # Fonction de recherche et de cadrage du canvas 
     def recherche(self): 
-        url = "https://ban.metrotopic.net/{}&limit=1".format(self.dlg.barre.text())
+        url = "https://adict.strasbourg.eu/addok/search?q={}&limit=1".format(self.dlg.barre.text())
         r = requests.get(url)
         json_object = json.loads(r.content)
         try :
