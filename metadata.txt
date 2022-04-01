@@ -1,47 +1,18 @@
-# This file contains metadata for your plugin.
-
-# This file should be included when you package your plugin.# Mandatory items:
-
 [general]
-name=Recherche d'adresse simple (BAN)
-qgisMinimumVersion=3.0
-description=Recherche d'adresse
+name=SimpleBan
+qgisMinimumVersion=2.14
+qgisMaximumVersion=3.98
+description= Recherche d'adresse BAN Eurométropole de Strasbourg
 version=0.1
-author=clément Zitouni
-email=cazitouni@metrotopic.net
-
-about=Ce plugin à pour but de permettre une recherche d'adresse dans la base de données BAN et de la géolocaliser.
-
-tracker=http://bugs
-repository=http://repo
-# End of mandatory metadata
-
-# Recommended items:
-
-hasProcessingProvider=no
-# Uncomment the following line and add your changelog:
-# changelog=
-
-# Tags are comma separated with spaces allowed
-tags=python
-
-homepage=http://homepage
+author=Clément Zitouni
+email=clement.zitouni@strasbourg.eu
+about=Ce plugin permet d'effectuer une recherche d'adresse sur les communes de l'Eurométropole de Strasbourg.
+tracker=https://github.com/cazitouni/simple_ban/issues
+repository=https://github.com/cazitouni/simple_ban
+changelog=version 0.1: Version initiale
+tags=ban, recherche, adresse, strasbourg, eurométropole
+homepage=https://github.com/cazitouni/simple_ban
 category=Plugins
 icon=icon.png
-# experimental flag
 experimental=False
-
-# deprecated flag (applies to the whole plugin, not just a single version)
 deprecated=False
-
-# Since QGIS 3.8, a comma separated list of plugins to be installed
-# (or upgraded) can be specified.
-# Check the documentation for more information.
-# plugin_dependencies=
-
-Category of the plugin: Raster, Vector, Database or Web
-# category=
-
-# If the plugin can run on QGIS Server.
-server=False
-
