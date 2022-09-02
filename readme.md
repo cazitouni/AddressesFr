@@ -1,1 +1,1 @@
-# Simple Qgis Ban plugin for Strasbourg EUrometropolis addresses 
+# Simple Qgis Ban plugin for Strasbourg Erometropolis addresses 
