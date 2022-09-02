@@ -24,7 +24,7 @@
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon, QColor
 from qgis.PyQt.QtWidgets import QAction, QErrorMessage, QCompleter
-from qgis.core import QgsProject, QgsCoordinateTransform, QgsCoordinateReferenceSystem, QgsPointXY
+from qgis.core import QgsProject, QgsCoordinateTransform, QgsCoordinateReferenceSystem, QgsPointXY, QgsTask, QgsApplication
 from qgis.gui import QgsVertexMarker
 
 
@@ -39,7 +39,7 @@ import json
 
 
 
-class SimbleBan:
+class AdressesFr:
     """QGIS Plugin Implementation."""
 
     def __init__(self, iface):
@@ -59,7 +59,7 @@ class SimbleBan:
         locale_path = os.path.join(
             self.plugin_dir,
             'i18n',
-            'SimbleBan_{}.qm'.format(locale))
+            'AdressesFr_{}.qm'.format(locale))
 
         if os.path.exists(locale_path):
             self.translator = QTranslator()
@@ -87,7 +87,7 @@ class SimbleBan:
         :rtype: QString
         """
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
-        return QCoreApplication.translate('SimbleBan', message)
+        return QCoreApplication.translate('AdressesFr', message)
 
 
     def add_action(
@@ -211,13 +211,22 @@ class SimbleBan:
 
         # show the dialog
         self.dlg.show()
+
+    def webRequest(self, url):
+        r = requests.get(url)
+        self.r = r
+
     
+
     # Fonction de completion auto par mise à jour du model
     def completion(self) :
         listeAddr = []
         if self.dlg.barre.text() : 
-            url = "https://adict.strasbourg.eu/addok/search?q={}".format(self.dlg.barre.text())
-            r = requests.get(url)
+            url = "https://api-adresse.data.gouv.fr/search/?q={}&limit=5".format(self.dlg.barre.text())
+            task = QgsTask.fromFunction('test task', self.run, on_finished=self.webRequest(url))
+            QgsApplication.taskManager().addTask(task)
+
+            r = self.r
             try :
                 json_object = json.loads(r.content)
                 for feature in json_object["features"] :
@@ -228,7 +237,7 @@ class SimbleBan:
 
     # Fonction de recherche et de cadrage du canvas 
     def recherche(self): 
-        url = "https://adict.strasbourg.eu/addok/search?q={}&limit=1".format(self.dlg.barre.text())
+        url = "https://api-adresse.data.gouv.fr/search/?q={}&limit=1".format(self.dlg.barre.text())
         r = requests.get(url)
         self.deleteMarker()
         try :
