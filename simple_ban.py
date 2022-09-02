@@ -22,9 +22,10 @@
  ***************************************************************************/
 """
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
-from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtGui import QIcon, QColor
 from qgis.PyQt.QtWidgets import QAction, QErrorMessage, QCompleter
 from qgis.core import QgsProject, QgsCoordinateTransform, QgsCoordinateReferenceSystem, QgsPointXY
+from qgis.gui import QgsVertexMarker
 
 
 
@@ -182,6 +183,8 @@ class SimbleBan:
                 action)
             self.iface.removeToolBarIcon(action)
 
+    def closeEvent(self, event):
+        self.deleteMarker()
 
     def run(self):
         """Run method that performs all the real work"""
@@ -196,11 +199,13 @@ class SimbleBan:
         self.error_dialog = QErrorMessage()
         self.dlg.barre.textEdited.connect(self.completion)
         self.completer = QCompleter([])
+        self.markers = []
         self.completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
         self.completer.setCaseSensitivity(Qt.CaseInsensitive)
         self.dlg.barre.setCompleter(self.completer)
         self.model = self.completer.model()
-        
+        self.dlg.closeEvent = self.closeEvent   
+         
         # Connection au boutton et fonction de recherche/cadrage 
         self.dlg.recherche.clicked.connect(self.recherche)
 
@@ -225,7 +230,7 @@ class SimbleBan:
     def recherche(self): 
         url = "https://adict.strasbourg.eu/addok/search?q={}&limit=1".format(self.dlg.barre.text())
         r = requests.get(url)
-        
+        self.deleteMarker()
         try :
             json_object = json.loads(r.content)
             x = json_object["features"][0]["geometry"]["coordinates"][0]
@@ -236,8 +241,25 @@ class SimbleBan:
             coord = transform.transform(QgsPointXY(x, y))
             self.iface.mapCanvas().setCenter(coord)
             self.iface.mapCanvas().zoomScale(1000)
+
+            self.deleteMarker()
+            m1 = QgsVertexMarker(self.iface.mapCanvas())
+            m1.setCenter(coord)
+            m1.setColor(QColor(255,0, 0)) #(R,G,B)
+            m1.setIconSize(10)
+            m1.setIconType(QgsVertexMarker.ICON_X)
+            m1.setPenWidth(3)
+            self.markers.append(m1)
+            self.iface.mapCanvas().refresh()
+
         except Exception :
             pass
+    
+    def deleteMarker(self):
+        canvas = self.iface.mapCanvas()
+        for mark in self.markers:
+            canvas.scene().removeItem(mark)
+        canvas.refresh()
 
         
         
