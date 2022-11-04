@@ -194,47 +194,47 @@ class AdressesFr:
 
         self.dlg = SimbleBanDialog()
         self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint)
+        self.count = 1
     
         # Ligne de recherche et completion automatique 
-        self.error_dialog = QErrorMessage()
-        self.dlg.barre.textEdited.connect(self.completion)
-        self.completer = QCompleter([])
-        self.markers = []
+        self.completer = QCompleter(['Boulevard Gambetta 06000 Nice', 'Avenue du Rhin 67100 Strasbourg', 'Avenue des Champs Elysées 75008 Paris', 'Cours Jean Jaurès 38000 Grenoble', 'Rue Théodore Lefebvre 86000 Poitiers'])
         self.completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
         self.completer.setCaseSensitivity(Qt.CaseInsensitive)
+        self.completer.setMaxVisibleItems(5)
         self.dlg.barre.setCompleter(self.completer)
         self.model = self.completer.model()
-        self.dlg.closeEvent = self.closeEvent   
-         
+        self.dlg.closeEvent = self.closeEvent  
+        self.error_dialog = QErrorMessage()
+        self.typing_timer = QtCore.QTimer()
+        self.typing_timer.setSingleShot(True)
+        self.dlg.barre.textEdited.connect(self.start_typing_timer)
+        self.typing_timer.timeout.connect(self.completion)
+        self.markers = []
+ 
         # Connection au boutton et fonction de recherche/cadrage 
         self.dlg.recherche.clicked.connect(self.recherche)
 
         # show the dialog
-        self.dlg.show()
-
-    def webRequest(self, url):
-        r = requests.get(url)
-        self.r = r
-
-    
-
+        self.dlg.show()  
+        
     # Fonction de completion auto par mise à jour du model
     def completion(self) :
-        listeAddr = []
+        listeAddr = []  
         if self.dlg.barre.text() : 
             url = "https://api-adresse.data.gouv.fr/search/?q={}&limit=5".format(self.dlg.barre.text())
-            task = QgsTask.fromFunction('test task', self.run, on_finished=self.webRequest(url))
-            QgsApplication.taskManager().addTask(task)
-
-            r = self.r
+            try :
+                r = requests.get(url, timeout=0.300)
+            except requests.exceptions.RequestException :
+                return
             try :
                 json_object = json.loads(r.content)
                 for feature in json_object["features"] :
-                    listeAddr.append(str(feature["properties"]["label"]))    
-            except KeyError:
-                pass     
-        self.model.setStringList(listeAddr)
-
+                    listeAddr.append(str(feature["properties"]["label"]))
+                if len(listeAddr) >= 1:
+                    self.model.setStringList(listeAddr)
+            except Exception:
+                pass
+            
     # Fonction de recherche et de cadrage du canvas 
     def recherche(self): 
         url = "https://api-adresse.data.gouv.fr/search/?q={}&limit=1".format(self.dlg.barre.text())
@@ -269,6 +269,10 @@ class AdressesFr:
         for mark in self.markers:
             canvas.scene().removeItem(mark)
         canvas.refresh()
+        
+    def start_typing_timer(self):
+    
+        self.typing_timer.start(300)
 
         
         
