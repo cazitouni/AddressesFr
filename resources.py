@@ -1,13 +1,4 @@
-# -*- coding: utf-8 -*-
-
-# Resource object code
-#
-# Created by: The Resource Compiler for PyQt5 (Qt v5.15.2)
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore
-
 qt_resource_data = b"\
 \x00\x00\x09\x6f\
 \x89\
@@ -163,7 +154,6 @@ qt_resource_data = b"\
 \x0a\xbe\x30\xaa\xe0\x4b\x42\x29\xf5\x1f\xe9\xb4\x7b\x4a\xc9\x7e\
 \xa9\xf8\x00\x00\x00\x00\x49\x45\x4e\x44\xae\x42\x60\x82\
 "
-
 qt_resource_name = b"\
 \x00\x07\
 \x07\x3b\xe0\xb3\
@@ -178,14 +168,12 @@ qt_resource_name = b"\
 \x00\x69\
 \x00\x63\x00\x6f\x00\x6e\x00\x2e\x00\x70\x00\x6e\x00\x67\
 "
-
 qt_resource_struct_v1 = b"\
 \x00\x00\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x01\
 \x00\x00\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x02\
 \x00\x00\x00\x14\x00\x02\x00\x00\x00\x01\x00\x00\x00\x03\
 \x00\x00\x00\x2e\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\
 "
-
 qt_resource_struct_v2 = b"\
 \x00\x00\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x01\
 \x00\x00\x00\x00\x00\x00\x00\x00\
@@ -196,7 +184,6 @@ qt_resource_struct_v2 = b"\
 \x00\x00\x00\x2e\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\
 \x00\x00\x01\x7f\x6f\x8a\xec\x6f\
 "
-
 qt_version = [int(v) for v in QtCore.qVersion().split('.')]
 if qt_version < [5, 8, 0]:
     rcc_version = 1
@@ -204,11 +191,8 @@ if qt_version < [5, 8, 0]:
 else:
     rcc_version = 2
     qt_resource_struct = qt_resource_struct_v2
-
 def qInitResources():
     QtCore.qRegisterResourceData(rcc_version, qt_resource_struct, qt_resource_name, qt_resource_data)
-
 def qCleanupResources():
     QtCore.qUnregisterResourceData(rcc_version, qt_resource_struct, qt_resource_name, qt_resource_data)
-
 qInitResources()
