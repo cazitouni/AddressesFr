@@ -16,3 +16,4 @@ category=Plugins
 icon=icon.png
 experimental=False
 deprecated=False
+keep_dialog_on_top=True

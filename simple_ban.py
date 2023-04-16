@@ -79,7 +79,7 @@ class AdressesFr:
     def run(self):
         self.dlg = SimbleBanDialog()
         self.dlg.rejected.connect(self.deleteMarker)
-        #self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint)
+        # self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.manager = QNetworkAccessManager()
         self.completer = QCompleter(['', '', '', '', ''])
         self.completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)

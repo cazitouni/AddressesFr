@@ -1,7 +1,6 @@
 import os
 from qgis.PyQt import uic
 from qgis.PyQt import QtWidgets
-from qgis.PyQt.QtGui import QPixmap
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'simple_ban_dialog_base.ui'))
 class SimbleBanDialog(QtWidgets.QDialog, FORM_CLASS):
