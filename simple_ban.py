@@ -9,6 +9,7 @@ from .simple_ban_dialog import SimbleBanDialog
 import os.path
 import json
 
+
 class AdressesFr:
     
     def __init__(self, iface):
@@ -77,9 +78,8 @@ class AdressesFr:
         self.deleteMarker()  
                   
     def run(self):
-        self.dlg = SimbleBanDialog()
+        self.dlg = SimbleBanDialog(self.iface)
         self.dlg.rejected.connect(self.deleteMarker)
-        # self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.manager = QNetworkAccessManager()
         self.completer = QCompleter(['', '', '', '', ''])
         self.completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
